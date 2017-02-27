@@ -20,3 +20,5 @@
   }
 })
 ```
+##兼容性:ie9+
+## (示例demo)[https://lijinwen1994.github.io/ife_2017/自定义右键菜单插件/]
