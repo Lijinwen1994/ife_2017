@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.face{
+				width: 100%;
+				height: 50px;
+				background-color: #778899;
+				text-align: center;
+				line-height: 50px;
+				box-shadow: inset 1px 2px 1px #2A2E3D;
+			}
+			.menu{
+				list-style: none;background-position: ;
+				padding: 10px;
+				border: 1px solid #B9B9B9;
+				border-radius:4px;
+				position: absolute;
+				background-color: #fff;
+			}
+			.menu li:hover{
+				background-color: #7C7E83;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="face js-face">右键点击弹出菜单</div>
+		<ul class="menu js-menu">
+			<li>菜单1</li>
+			<li>菜单3</li>
+			<li>菜单呢</li>
+		</ul>
+		<script type="text/javascript">
+
+			
+			var rightKeyMenu = function(option) {
+				this.face = document.getElementsByClassName(option.face)[0];
+				this.menu = document.getElementsByClassName(option.menu)[0];	
+				this.clientwidth = document.body.clientWidth || document.documentElement.clientWidth;
+				this.menuWidth = this.menu.clientWidth;
+				this.menu.style.display = "none";
+				this.init();//初始化
+				typeof option.huidiao == "function" ? option.huidiao() : "";
+					
+								
+			}
+			rightKeyMenu.prototype.init = function(){
+				this.hideMenu();
+				this.contextMenu();			
+			}
+			rightKeyMenu.prototype.contextMenu= function() {
+				var that = this;
+				this.face.oncontextmenu = function(event){
+					event.returnValue = false;
+					event.preventDefault();//火狐
+					var x = event.clientX || event.clientX;
+					var y = event.clientY || event.clientY;
+					that.menu.style.cssText = "display:block; posoition:absolute;";
+					console.log(that.menuWidth+x)
+					if((that.menuWidth + x) < that.clientwidth){//宽度够						
+						that.menu.style.top = (y - 15) + "px";
+						that.menu.style.left = x + "px";
+					}else{//宽度不够
+						that.menu.style.top = (y - 15) + "px";
+						that.menu.style.left = (x - that.menuWidth) + "px";
+					}
+				}
+			}
+		
+			//单击表面隐藏menu
+			rightKeyMenu.prototype.hideMenu = function(){
+				var that = this;
+				this.face.onclick =function(){
+					that.menu.style.display = "none";
+				} 
+			}
+			//实例化
+			var shili = new rightKeyMenu({
+				face:"js-face",
+				menu:"js-menu",
+				huidiao:function() {//回调函数
+					var i = 0,
+					lis = document.querySelectorAll(".js-menu li");
+					for(i; i < lis.length; i++){
+						lis[i].onclick = function() {
+							console.log(this.innerHTML);
+							document.querySelector(".menu").style.display = "none";
+						}
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
