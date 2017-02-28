@@ -43,7 +43,7 @@
 				this.menuWidth = this.menu.clientWidth;
 				this.menu.style.display = "none";
 				this.init();//初始化
-				typeof option.huidiao == "function" ? option.huidiao() : "";
+				typeof option.callback == "function" ? option.callback() : "";
 					
 								
 			}
@@ -81,7 +81,7 @@
 			var shili = new rightKeyMenu({
 				face:"js-face",
 				menu:"js-menu",
-				huidiao:function() {//回调函数
+				callback:function() {//回调函数
 					var i = 0,
 					lis = document.querySelectorAll(".js-menu li");
 					for(i; i < lis.length; i++){
